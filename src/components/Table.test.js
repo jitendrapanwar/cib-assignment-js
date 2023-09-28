@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import Table from './Table';
 
 
@@ -19,6 +19,11 @@ describe("Table", () => {
       "ticker": "GAMMA",
       "price": "2290.1",
       "assetClass": "Macro"
+    },
+    {
+      "ticker": "DELTA",
+      "price": "-1290.1",
+      "assetClass": "Macro"
     }]
 
   beforeEach(() => {
@@ -33,9 +38,9 @@ describe("Table", () => {
     expect(tableHeaders.length).toBe(3);
   });
 
-  it("should have 4 rows including header row", () => {
+  it("should have 5 rows including header row", () => {
     const tableRows = screen.getAllByRole("row");
-    expect(tableRows.length).toBe(4);
+    expect(tableRows.length).toBe(5);
   });
 
   describe("Row colour coded classes", () => {
@@ -61,8 +66,13 @@ describe("Table", () => {
       const tableRows = screen.getAllByRole("row");
       expect(tableRows[3]).toHaveClass('asset-class-macro')
     });
-  })
 
+    it("should have red colour for negative prices", () => {
+      const tableRows = screen.getAllByRole("row");
+      const cells = within(tableRows[4]).getAllByRole('cell')
+      expect(cells[1]).toHaveClass('negative-price')
+    });
+  })
 
   afterEach(() => jest.clearAllMocks())
 
