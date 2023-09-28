@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types';
-import { TableColumns } from './TableColumns';
-import TableBody from './TableBody';
 import SortBy from './SortBy';
-import { sortByAssetClass, sortByString, sortByNumber } from '../helper'
+import { sortByAssetClass, sortByString, sortByNumber } from '../helpers/helper'
+import Table from './Table';
 
-function IntrumentTable({ data }) {
+function FinancialInstruments({ data }) {
 
   const [tableData, setTableData] = useState(sortByString(data, 'ticker'))
 
@@ -24,6 +23,8 @@ function IntrumentTable({ data }) {
       case 'Price':
         result = sortByNumber(data, 'price', true)
         break;
+      default:
+        result = []
     }
 
     setTableData([...result])
@@ -31,18 +32,15 @@ function IntrumentTable({ data }) {
 
   return (
     <div className='instrument-table-container'>
-      <h1>Financial Intruments</h1>
+      <h1>Financial Instruments</h1>
       <SortBy options={['Ticker', 'Price', 'Asset Class']} defaultSelected='Ticker' onChange={handleSortBy} />
-      <table className='instrument-table'>
-        <TableColumns cols={cols} />
-        <TableBody tableData={tableData} />
-      </table>
+      {tableData && <Table cols={cols} data={tableData} />}
     </div>
   )
 }
 
-IntrumentTable.propTypes = {
+FinancialInstruments.propTypes = {
   data: PropTypes.array.isRequired
 };
 
-export default IntrumentTable;
+export default FinancialInstruments;

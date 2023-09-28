@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 
 function SortBy({ options, defaultSelected, onChange }) {
-
   const [selectedOption, setSelectedOption] = useState(defaultSelected)
 
   const hanldleOption = (evt) => {

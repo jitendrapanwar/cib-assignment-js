@@ -1,11 +1,11 @@
-import IntrumentTable from './components/InstrumentTable';
+import FinancialInstruments from './components/FinancialInstruments';
 import './App.css';
 import data from './fixtures/data.json'
 
 function App() {
   return (
     <div className="app-container">
-      <IntrumentTable data={data} />
+      <FinancialInstruments data={data} />
     </div>
   );
 }
